@@ -18,11 +18,11 @@ export default function Home() {
 
   const allMenuItems = useMemo(
     () => [
+      ...frozenItems,
+      ...italianFavourites,
+      ...cookedDishes,
       ...lunchMenu,
       ...dinnerMenu,
-      ...frozenItems,
-      ...cookedDishes,
-      ...italianFavourites,
     ],
     []
   );
@@ -63,22 +63,15 @@ export default function Home() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 space-y-8">
             <MenuSection
-              title="Weekly Lunch Menu"
-              items={lunchMenu}
-              selectedIds={selectedItemIds}
-              onToggle={handleToggle}
-            />
-
-            <MenuSection
-              title="Weekly Dinner Menu"
-              items={dinnerMenu}
-              selectedIds={selectedItemIds}
-              onToggle={handleToggle}
-            />
-
-            <MenuSection
               title="Frozen Items"
               items={frozenItems}
+              selectedIds={selectedItemIds}
+              onToggle={handleToggle}
+            />
+
+            <MenuSection
+              title="Italian Favourites"
+              items={italianFavourites}
               selectedIds={selectedItemIds}
               onToggle={handleToggle}
             />
@@ -91,8 +84,15 @@ export default function Home() {
             />
 
             <MenuSection
-              title="Italian Favourites"
-              items={italianFavourites}
+              title="Weekly Lunch Menu"
+              items={lunchMenu}
+              selectedIds={selectedItemIds}
+              onToggle={handleToggle}
+            />
+
+            <MenuSection
+              title="Weekly Dinner Menu"
+              items={dinnerMenu}
               selectedIds={selectedItemIds}
               onToggle={handleToggle}
             />
