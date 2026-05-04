@@ -30,77 +30,101 @@ export default function OrderSummary({
 
   if (selectedItems.length === 0) {
     return (
-      <div className="bg-white rounded-lg shadow-md p-6 text-center">
-        <p className="text-gray-500 text-lg">No items selected yet</p>
-        <p className="text-gray-400 text-sm mt-2">
-          Select items from the menu above to get started
-        </p>
+      <div className="premium-card text-center animate-slide-in-up">
+        <div className="mb-4">
+          <div className="text-6xl mb-4">🛒</div>
+          <p className="text-xl font-bold text-slate-200 mb-2">Your Cart is Empty</p>
+          <p className="text-slate-400">Select delicious items from the menu to get started</p>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden">
-      <div className="bg-green-700 text-white p-4">
-        <h3 className="text-xl font-bold">Order Summary</h3>
+    <div className="premium-card overflow-hidden animate-slide-in-up">
+      {/* Header */}
+      <div className="bg-gradient-to-r from-green-600 to-emerald-600 -m-6 mb-4 p-6 glow-effect">
+        <h3 className="text-3xl font-black text-white flex items-center gap-3">
+          <span>🎉</span> Your Order
+        </h3>
       </div>
 
-      <div className="p-4">
-        <div className="space-y-3 mb-6">
-          {selectedItems.map((item, index) => (
-            <div
-              key={item.id}
-              className="flex items-center justify-between p-3 bg-amber-50 rounded border border-amber-200"
-            >
-              <div className="flex-1">
-                <div className="font-medium text-gray-800">
-                  {index + 1}. {item.name}
-                </div>
-                <div className="text-xs text-green-700 font-semibold">
-                  {item.day && `${item.day} `}
-                  {getCategoryLabel(item.category)}
+      {/* Items List */}
+      <div className="space-y-3 mb-8 max-h-96 overflow-y-auto pr-2">
+        {selectedItems.map((item, index) => (
+          <div
+            key={item.id}
+            className="glass-effect rounded-xl p-4 group hover:bg-white/20 smooth-transition"
+          >
+            <div className="flex items-center justify-between gap-4">
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-3">
+                  <div className="text-xl font-bold text-amber-300 min-w-fit">
+                    #{index + 1}
+                  </div>
+                  <div className="flex-1">
+                    <div className="font-bold text-lg text-slate-100 truncate group-hover:text-amber-300 smooth-transition">
+                      {item.name}
+                    </div>
+                    <div className="text-xs text-slate-400 mt-1">
+                      {item.day && `📅 ${item.day} • `}
+                      {getCategoryLabel(item.category)}
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div className="flex items-center gap-3">
-                <div className="font-bold text-amber-800 text-lg whitespace-nowrap">
-                  Rs. {item.price}
+              <div className="flex items-center gap-3 flex-shrink-0">
+                <div className="text-right">
+                  <div className="text-xl font-black gradient-text">
+                    Rs. {item.price}
+                  </div>
                 </div>
                 <button
                   onClick={() => onRemove(item.id)}
-                  className="px-3 py-1 bg-red-500 text-white text-sm rounded hover:bg-red-600 transition-colors"
+                  className="p-2 rounded-lg bg-red-500/30 hover:bg-red-500/50 text-red-300 hover:text-red-200 smooth-transition font-bold hover:scale-110"
+                  title="Remove item"
                 >
-                  Remove
+                  ✕
                 </button>
               </div>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
+      </div>
 
-        <div className="border-t border-amber-200 pt-4 mb-6">
-          <div className="flex justify-between items-center text-lg font-bold">
-            <span>Total:</span>
-            <span className="text-green-700 text-2xl">Rs. {total}</span>
+      {/* Total */}
+      <div className="border-t border-white/20 pt-6 mb-6">
+        <div className="flex justify-between items-center">
+          <span className="text-lg font-bold text-slate-200">Subtotal:</span>
+          <div className="text-right">
+            <div className="text-4xl font-black gradient-text">
+              Rs. {total}
+            </div>
+            <div className="text-xs text-slate-400 mt-1">
+              {selectedItems.length} item{selectedItems.length !== 1 ? 's' : ''}
+            </div>
           </div>
         </div>
+      </div>
 
-        <div className="flex flex-col sm:flex-row gap-3">
-          <button
-            onClick={handleCopy}
-            className={`flex-1 py-2 px-4 rounded font-semibold transition-colors ${
-              copySuccess
-                ? 'bg-green-600 text-white'
-                : 'bg-blue-600 text-white hover:bg-blue-700'
-            }`}
-          >
-            {copySuccess ? '✓ Copied!' : 'Copy Order Text'}
-          </button>
-          <button
-            onClick={onClearAll}
-            className="flex-1 py-2 px-4 bg-gray-500 text-white rounded font-semibold hover:bg-gray-600 transition-colors"
-          >
-            Clear All
-          </button>
-        </div>
+      {/* Action Buttons */}
+      <div className="flex flex-col gap-3">
+        <button
+          onClick={handleCopy}
+          className={`w-full py-3 px-4 rounded-xl font-bold text-lg smooth-transition flex items-center justify-center gap-2 ${
+            copySuccess
+              ? 'bg-green-600 text-white scale-105'
+              : 'glass-effect text-green-300 hover:bg-green-600/40 hover:text-green-200 scale-hover'
+          }`}
+        >
+          {copySuccess ? '✓ Copied to Clipboard!' : '📋 Copy Order'}
+        </button>
+        <button
+          onClick={onClearAll}
+          className="w-full py-3 px-4 glass-effect rounded-xl font-bold text-lg text-slate-300 hover:text-red-300 hover:bg-red-500/20 smooth-transition scale-hover"
+        >
+          🗑️ Clear All
+        </button>
       </div>
     </div>
   );

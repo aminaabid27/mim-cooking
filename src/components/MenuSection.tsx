@@ -10,25 +10,51 @@ interface MenuSectionProps {
   onToggle: (item: MenuItem) => void;
 }
 
+const sectionEmojis: Record<string, string> = {
+  'Frozen Items': '🧊',
+  'Italian Favourites': '🇮🇹',
+  'Cooked Dishes': '🍲',
+  'Lunch Menu': '🥗',
+  'Dinner Menu': '🍽️',
+};
+
 export default function MenuSection({
   title,
   items,
   selectedIds,
   onToggle,
 }: MenuSectionProps) {
+  const emoji = sectionEmojis[title] || '🍳';
+  const selectedCount = items.filter((item) => selectedIds.has(item.id)).length;
+
   return (
-    <section className="mb-8">
-      <h2 className="text-2xl font-bold text-green-700 mb-4 pb-3 border-b-2 border-amber-600">
-        {title}
-      </h2>
-      <div className="bg-white rounded-lg shadow-md overflow-hidden">
-        {items.map((item) => (
-          <MenuItemComponent
-            key={item.id}
-            item={item}
-            isSelected={selectedIds.has(item.id)}
-            onToggle={onToggle}
-          />
+    <section className="mb-12 animate-slide-in-up">
+      {/* Section Header */}
+      <div className="mb-6">
+        <div className="flex items-center gap-3 mb-4">
+          <span className="text-4xl">{emoji}</span>
+          <div className="flex-1">
+            <h2 className="text-4xl font-black gradient-text">{title}</h2>
+            <div className="h-1 w-24 bg-gradient-to-r from-amber-400 to-orange-500 rounded-full mt-2"></div>
+          </div>
+          {selectedCount > 0 && (
+            <div className="glass-effect px-4 py-2 rounded-full">
+              <span className="text-amber-300 font-bold">{selectedCount} selected</span>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Items Grid */}
+      <div className="space-y-2">
+        {items.map((item, index) => (
+          <div key={item.id} style={{ animationDelay: `${index * 50}ms` }}>
+            <MenuItemComponent
+              item={item}
+              isSelected={selectedIds.has(item.id)}
+              onToggle={onToggle}
+            />
+          </div>
         ))}
       </div>
     </section>

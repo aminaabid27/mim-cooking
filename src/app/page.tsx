@@ -56,55 +56,66 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen" style={{ backgroundColor: '#f5f1e8' }}>
-      <Header />
+    <main className="min-h-screen relative">
+      {/* Animated background */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-20 left-5 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-40 right-5 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl"></div>
+      </div>
 
-      <div className="max-w-6xl mx-auto px-4 pb-12">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-2 space-y-8">
-            <MenuSection
-              title="Frozen Items"
-              items={frozenItems}
-              selectedIds={selectedItemIds}
-              onToggle={handleToggle}
-            />
+      {/* Content */}
+      <div className="relative z-10">
+        <Header />
 
-            <MenuSection
-              title="Italian Favourites"
-              items={italianFavourites}
-              selectedIds={selectedItemIds}
-              onToggle={handleToggle}
-            />
-
-            <MenuSection
-              title="Cooked Dishes"
-              items={cookedDishes}
-              selectedIds={selectedItemIds}
-              onToggle={handleToggle}
-            />
-
-            <MenuSection
-              title="Weekly Lunch Menu"
-              items={lunchMenu}
-              selectedIds={selectedItemIds}
-              onToggle={handleToggle}
-            />
-
-            <MenuSection
-              title="Weekly Dinner Menu"
-              items={dinnerMenu}
-              selectedIds={selectedItemIds}
-              onToggle={handleToggle}
-            />
-          </div>
-
-          <div className="lg:col-span-1">
-            <div className="sticky top-4">
-              <OrderSummary
-                selectedItems={selectedItems}
-                onRemove={handleRemove}
-                onClearAll={handleClearAll}
+        <div className="max-w-7xl mx-auto px-4 pb-20">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* Menu Sections - Main Content */}
+            <div className="lg:col-span-2 space-y-8">
+              <MenuSection
+                title="Frozen Items"
+                items={frozenItems}
+                selectedIds={selectedItemIds}
+                onToggle={handleToggle}
               />
+
+              <MenuSection
+                title="Italian Favourites"
+                items={italianFavourites}
+                selectedIds={selectedItemIds}
+                onToggle={handleToggle}
+              />
+
+              <MenuSection
+                title="Cooked Dishes"
+                items={cookedDishes}
+                selectedIds={selectedItemIds}
+                onToggle={handleToggle}
+              />
+
+              <MenuSection
+                title="Lunch Menu"
+                items={lunchMenu}
+                selectedIds={selectedItemIds}
+                onToggle={handleToggle}
+              />
+
+              <MenuSection
+                title="Dinner Menu"
+                items={dinnerMenu}
+                selectedIds={selectedItemIds}
+                onToggle={handleToggle}
+              />
+            </div>
+
+            {/* Order Summary - Sticky Sidebar */}
+            <div className="lg:col-span-1">
+              <div className="sticky top-4">
+                <OrderSummary
+                  selectedItems={selectedItems}
+                  onRemove={handleRemove}
+                  onClearAll={handleClearAll}
+                />
+              </div>
             </div>
           </div>
         </div>
