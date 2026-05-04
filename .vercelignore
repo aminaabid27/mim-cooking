@@ -1,0 +1,10 @@
+# Vercel ignore file
+node_modules
+npm-debug.log
+.next
+.git
+.gitignore
+README.md
+public
+AGENTS.md
+CLAUDE.md
