@@ -41,50 +41,50 @@ export default function OrderSummary({
   }
 
   return (
-    <div className="premium-card overflow-hidden animate-slide-in-up">
+    <div className="premium-card overflow-hidden animate-slide-in-up flex flex-col max-h-full">
       {/* Header */}
-      <div className="bg-gradient-to-r from-green-600 to-emerald-600 -m-6 mb-4 p-6 glow-effect">
-        <h3 className="text-3xl font-black text-white flex items-center gap-3">
+      <div className="bg-gradient-to-r from-green-600 to-emerald-600 -mx-6 -mt-6 mb-4 p-5 sm:p-6 glow-effect">
+        <h3 className="text-2xl sm:text-3xl font-black text-white flex items-center gap-3">
           <span>🎉</span> Your Order
         </h3>
       </div>
 
       {/* Items List */}
-      <div className="space-y-3 mb-8 max-h-96 overflow-y-auto pr-2">
+      <div className="space-y-3 mb-6 overflow-y-auto pr-1 flex-1 min-h-0">
         {selectedItems.map((item, index) => (
           <div
             key={item.id}
-            className="glass-effect rounded-xl p-4 group hover:bg-white/20 smooth-transition"
+            className="glass-effect rounded-xl p-3 sm:p-4 group hover:bg-white/20 smooth-transition"
           >
-            <div className="flex items-center justify-between gap-4">
+            <div className="flex items-center justify-between gap-3 sm:gap-4">
               <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-3">
-                  <div className="text-xl font-bold text-amber-300 min-w-fit">
+                <div className="flex items-center gap-2 sm:gap-3">
+                  <div className="text-sm sm:text-xl font-bold text-amber-300 min-w-fit">
                     #{index + 1}
                   </div>
-                  <div className="flex-1">
-                    <div className="font-bold text-lg text-slate-100 truncate group-hover:text-amber-300 smooth-transition">
+                  <div className="flex-1 min-w-0">
+                    <div className="font-bold text-sm sm:text-lg text-slate-100 truncate group-hover:text-amber-300 smooth-transition">
                       {item.name}
                     </div>
-                    <div className="text-xs text-slate-400 mt-1">
+                    <div className="text-[10px] sm:text-xs text-slate-400 mt-0.5 truncate">
                       {item.day && `📅 ${item.day} • `}
                       {getCategoryLabel(item.category)}
                     </div>
                   </div>
                 </div>
               </div>
-              <div className="flex items-center gap-3 flex-shrink-0">
+              <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
                 <div className="text-right">
-                  <div className="text-xl font-black gradient-text">
+                  <div className="text-sm sm:text-xl font-black gradient-text">
                     Rs. {item.price}
                   </div>
                 </div>
                 <button
                   onClick={() => onRemove(item.id)}
-                  className="p-2 rounded-lg bg-red-500/30 hover:bg-red-500/50 text-red-300 hover:text-red-200 smooth-transition font-bold hover:scale-110"
+                  className="p-1.5 sm:p-2 rounded-lg bg-red-500/30 hover:bg-red-500/50 text-red-300 hover:text-red-200 smooth-transition font-bold hover:scale-110"
                   title="Remove item"
                 >
-                  ✕
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                 </button>
               </div>
             </div>
@@ -93,14 +93,14 @@ export default function OrderSummary({
       </div>
 
       {/* Total */}
-      <div className="border-t border-white/20 pt-6 mb-6">
+      <div className="border-t border-white/20 pt-4 mb-6">
         <div className="flex justify-between items-center">
-          <span className="text-lg font-bold text-slate-200">Subtotal:</span>
+          <span className="text-base sm:text-lg font-bold text-slate-200">Subtotal:</span>
           <div className="text-right">
-            <div className="text-4xl font-black gradient-text">
+            <div className="text-2xl sm:text-4xl font-black gradient-text">
               Rs. {total}
             </div>
-            <div className="text-xs text-slate-400 mt-1">
+            <div className="text-[10px] sm:text-xs text-slate-400 mt-0.5">
               {selectedItems.length} item{selectedItems.length !== 1 ? 's' : ''}
             </div>
           </div>
