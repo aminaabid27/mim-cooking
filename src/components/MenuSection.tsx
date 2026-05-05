@@ -4,6 +4,7 @@ import { MenuItem } from '@/types';
 import MenuItemComponent from './MenuItem';
 
 interface MenuSectionProps {
+  id: string;
   title: string;
   items: MenuItem[];
   selectedIds: Set<string>;
@@ -19,6 +20,7 @@ const sectionEmojis: Record<string, string> = {
 };
 
 export default function MenuSection({
+  id,
   title,
   items,
   selectedIds,
@@ -28,25 +30,27 @@ export default function MenuSection({
   const selectedCount = items.filter((item) => selectedIds.has(item.id)).length;
 
   return (
-    <section className="mb-8 sm:mb-12 animate-slide-in-up">
-      {/* Section Header */}
-      <div className="mb-4 sm:mb-6">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3 mb-2 sm:mb-4">
-          <span className="text-3xl sm:text-4xl">{emoji}</span>
-          <div className="flex-1">
-            <h2 className="text-2xl sm:text-4xl font-black gradient-text">{title}</h2>
-            <div className="h-1 w-16 sm:w-24 bg-gradient-to-r from-amber-400 to-orange-500 rounded-full mt-2"></div>
+    <section id={id} className="scroll-mt-24 animate-slide-in-up sm:scroll-mt-28">
+      <div className="mb-4 sm:mb-5">
+        <div className="flex items-start gap-3 sm:items-center">
+          <span className="shrink-0 text-3xl leading-none sm:text-4xl" aria-hidden="true">
+            {emoji}
+          </span>
+          <div className="min-w-0 flex-1">
+            <h2 className="text-2xl font-black leading-tight sm:text-4xl">{title}</h2>
+            <div className="mt-2 h-1 w-16 rounded-full bg-gradient-to-r from-amber-400 to-orange-500 sm:w-24"></div>
           </div>
           {selectedCount > 0 && (
-            <div className="glass-effect px-3 py-2 rounded-full mt-2 sm:mt-0">
-              <span className="text-amber-300 font-bold text-xs sm:text-base">{selectedCount} selected</span>
+            <div className="glass-effect shrink-0 rounded-full px-3 py-2">
+              <span className="text-xs font-bold text-amber-300 sm:text-base">
+                {selectedCount} selected
+              </span>
             </div>
           )}
         </div>
       </div>
 
-      {/* Items List (stacked for mobile) */}
-      <div className="space-y-2">
+      <div className="space-y-2.5">
         {items.map((item, index) => (
           <div key={item.id} style={{ animationDelay: `${index * 50}ms` }}>
             <MenuItemComponent

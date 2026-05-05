@@ -18,15 +18,20 @@ export default function Home() {
 
   const [isCartOpen, setIsCartOpen] = useState(false);
 
-  const allMenuItems = useMemo(
+  const menuSections = useMemo(
     () => [
-      ...frozenItems,
-      ...italianFavourites,
-      ...cookedDishes,
-      ...lunchMenu,
-      ...dinnerMenu,
+      { id: 'frozen-items', title: 'Frozen Items', items: frozenItems },
+      { id: 'italian-favourites', title: 'Italian Favourites', items: italianFavourites },
+      { id: 'cooked-dishes', title: 'Cooked Dishes', items: cookedDishes },
+      { id: 'lunch-menu', title: 'Lunch Menu', items: lunchMenu },
+      { id: 'dinner-menu', title: 'Dinner Menu', items: dinnerMenu },
     ],
     []
+  );
+
+  const allMenuItems = useMemo(
+    () => menuSections.flatMap((section) => section.items),
+    [menuSections]
   );
 
   const selectedItems = useMemo(
@@ -62,79 +67,63 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen relative">
-      {/* Animated background */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-20 left-5 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-40 right-5 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl"></div>
-      </div>
-
-      {/* Content */}
+    <main className="relative min-h-screen overflow-x-hidden pb-24 lg:pb-0">
       <div className="relative z-10">
         <Header />
 
-        <div className="max-w-7xl mx-auto px-4 pb-20">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Menu Sections - Main Content */}
-            <div className="lg:col-span-2 space-y-8">
-              <MenuSection
-                title="Frozen Items"
-                items={frozenItems}
-                selectedIds={selectedItemIds}
-                onToggle={handleToggle}
-              />
+        <div className="mx-auto max-w-7xl px-3 pb-10 sm:px-4 sm:pb-16 lg:px-6 lg:pb-20">
+          <nav
+            aria-label="Menu categories"
+            className="sticky top-0 z-30 -mx-3 mb-6 border-y border-white/10 bg-slate-950/85 px-3 py-3 backdrop-blur-xl sm:mx-0 sm:rounded-2xl sm:border lg:top-4"
+          >
+            <div className="flex gap-2 overflow-x-auto overscroll-x-contain pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+              {menuSections.map((section) => (
+                <a
+                  key={section.id}
+                  href={`#${section.id}`}
+                  className="shrink-0 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-bold text-slate-100 transition-colors hover:border-amber-300/60 hover:bg-amber-400/15 hover:text-amber-200"
+                >
+                  {section.title}
+                </a>
+              ))}
+            </div>
+          </nav>
 
-              <MenuSection
-                title="Italian Favourites"
-                items={italianFavourites}
-                selectedIds={selectedItemIds}
-                onToggle={handleToggle}
-              />
-
-              <MenuSection
-                title="Cooked Dishes"
-                items={cookedDishes}
-                selectedIds={selectedItemIds}
-                onToggle={handleToggle}
-              />
-
-              <MenuSection
-                title="Lunch Menu"
-                items={lunchMenu}
-                selectedIds={selectedItemIds}
-                onToggle={handleToggle}
-              />
-
-              <MenuSection
-                title="Dinner Menu"
-                items={dinnerMenu}
-                selectedIds={selectedItemIds}
-                onToggle={handleToggle}
-              />
+          <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-3 lg:gap-8">
+            <div className="space-y-7 lg:col-span-2 lg:space-y-8">
+              {menuSections.map((section) => (
+                <MenuSection
+                  key={section.id}
+                  id={section.id}
+                  title={section.title}
+                  items={section.items}
+                  selectedIds={selectedItemIds}
+                  onToggle={handleToggle}
+                />
+              ))}
             </div>
 
-            {/* Order Summary - Sticky Sidebar for Desktop, Modal for Mobile */}
             <div className={`
-              fixed inset-0 z-50 lg:relative lg:inset-auto lg:z-auto lg:block lg:col-span-1
+              fixed inset-0 z-50 lg:relative lg:inset-auto lg:z-auto lg:col-span-1 lg:block
               ${isCartOpen ? 'block' : 'hidden'}
             `}>
-              {/* Overlay for mobile */}
               <div 
                 className="fixed inset-0 bg-black/60 backdrop-blur-sm lg:hidden"
                 onClick={() => setIsCartOpen(false)}
               ></div>
               
               <div className={`
-                fixed bottom-0 left-0 right-0 bg-slate-900 lg:bg-transparent p-4 lg:p-0 
-                rounded-t-3xl lg:rounded-none lg:sticky lg:top-4 max-h-[90vh] lg:max-h-none overflow-y-auto
-                transition-transform duration-300 ease-in-out lg:transform-none
+                fixed bottom-0 left-0 right-0 max-h-[88dvh] overflow-y-auto rounded-t-3xl
+                bg-slate-950 p-4 shadow-2xl shadow-black/50 transition-transform duration-300 ease-in-out
+                lg:sticky lg:top-24 lg:max-h-[calc(100dvh-7rem)] lg:rounded-none lg:bg-transparent lg:p-0 lg:shadow-none lg:transform-none
                 ${isCartOpen ? 'translate-y-0' : 'translate-y-full'}
               `}>
                 <div className="flex justify-between items-center mb-4 lg:hidden">
                   <h2 className="text-xl font-bold text-white">Your Order</h2>
                   <button 
                     onClick={() => setIsCartOpen(false)}
-                    className="p-2 text-slate-400 hover:text-white"
+                    aria-label="Close order summary"
+                    className="min-h-11 min-w-11 rounded-full p-2 text-slate-300 hover:bg-white/10 hover:text-white"
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                   </button>
@@ -151,11 +140,11 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Floating Cart Button for Mobile */}
-      <div className="fixed bottom-6 right-6 z-40 lg:hidden">
+      <div className="fixed bottom-4 right-4 z-40 sm:bottom-6 sm:right-6 lg:hidden">
         <button
           onClick={toggleCart}
-          className="relative bg-amber-500 hover:bg-amber-600 text-white p-4 rounded-full shadow-2xl shadow-amber-500/50 flex items-center justify-center transition-all active:scale-95 glow-effect"
+          aria-label={`Open order summary with ${selectedItems.length} selected item${selectedItems.length === 1 ? '' : 's'}`}
+          className="relative flex min-h-16 min-w-16 items-center justify-center rounded-full bg-amber-500 p-4 text-white shadow-2xl shadow-amber-500/40 transition-colors hover:bg-amber-600 active:scale-95"
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <circle cx="9" cy="21" r="1"></circle>

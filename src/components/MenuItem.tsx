@@ -14,44 +14,47 @@ export default function MenuItemComponent({
   onToggle,
 }: MenuItemProps) {
   return (
-    <div
-      className={`group cursor-pointer premium-card px-3 py-3 sm:px-4 sm:py-4 ${
+    <button
+      type="button"
+      aria-pressed={isSelected}
+      onClick={() => onToggle(item)}
+      className={`group w-full cursor-pointer text-left premium-card px-3 py-3 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300 sm:px-4 sm:py-4 ${
         isSelected 
-          ? 'bg-gradient-to-r from-amber-500/30 to-orange-500/20 border-amber-400/50 scale-[1.02] sm:scale-105 shadow-amber-500/20' 
+          ? 'border-amber-300/70 bg-gradient-to-r from-amber-500/30 to-orange-500/20 shadow-amber-500/20' 
           : 'hover:bg-white/15'
       } animate-slide-in-up transition-all duration-300`}
-      onClick={() => onToggle(item)}
     >
-      <div className="flex items-center gap-3 sm:gap-4">
-        {/* Checkbox - Always visible on side */}
-        <div className="flex-shrink-0">
-          <input
-            type="checkbox"
-            checked={isSelected}
-            readOnly
-            className="w-5 h-5 sm:w-6 sm:h-6 cursor-pointer accent-amber-400 rounded border-2 border-amber-400/50"
-          />
+      <div className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-2 sm:grid-cols-[auto_1fr_auto] sm:items-center sm:gap-x-4">
+        <div
+          aria-hidden="true"
+          className={`mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-md border-2 sm:mt-0 ${
+            isSelected
+              ? 'border-amber-300 bg-amber-400 text-slate-950'
+              : 'border-amber-300/60 bg-white/5 text-transparent'
+          }`}
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M20 6 9 17l-5-5"></path>
+          </svg>
         </div>
 
-        {/* Content */}
-        <div className="flex-1 min-w-0">
-          <div className="font-bold text-sm sm:text-lg text-slate-100 group-hover:text-amber-300 smooth-transition truncate">
+        <div className="min-w-0">
+          <div className="break-words text-base font-bold leading-snug text-slate-100 smooth-transition group-hover:text-amber-300 sm:text-lg">
             {item.name}
           </div>
           {item.day && (
-            <div className="text-[10px] sm:text-xs text-amber-300/70 font-semibold uppercase tracking-wider mt-0.5">
+            <div className="mt-1 text-xs font-semibold uppercase tracking-wide text-amber-300/75">
               📅 {item.day}
             </div>
           )}
         </div>
 
-        {/* Price */}
-        <div className={`flex-shrink-0 text-right ${isSelected ? 'text-amber-300' : 'text-amber-200'}`}>
-          <div className="text-base sm:text-2xl font-black gradient-text">
+        <div className={`col-start-2 justify-self-start rounded-full bg-slate-950/35 px-3 py-1.5 text-left sm:col-start-auto sm:justify-self-end sm:bg-transparent sm:px-0 sm:py-0 sm:text-right ${isSelected ? 'text-amber-300' : 'text-amber-200'}`}>
+          <div className="whitespace-nowrap text-lg font-black sm:text-2xl">
             Rs. {item.price}
           </div>
         </div>
       </div>
-    </div>
+    </button>
   );
 }
