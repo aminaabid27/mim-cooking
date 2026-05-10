@@ -4,7 +4,8 @@ import { useState, useMemo } from 'react';
 import Header from '@/components/Header';
 import MenuSection from '@/components/MenuSection';
 import OrderSummary from '@/components/OrderSummary';
-import { MenuItem } from '@/types';
+import { CartItem, MenuItem } from '@/types';
+import { getCartItemCount } from '@/utils/formatting';
 import {
   lunchMenu,
   dinnerMenu,
@@ -14,8 +15,7 @@ import {
 } from '@/data/menu';
 
 export default function Home() {
-  const [selectedItemIds, setSelectedItemIds] = useState<Set<string>>(new Set());
-
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   const menuSections = useMemo(
@@ -29,37 +29,49 @@ export default function Home() {
     []
   );
 
-  const allMenuItems = useMemo(
-    () => menuSections.flatMap((section) => section.items),
-    [menuSections]
-  );
+  const itemCount = getCartItemCount(cartItems);
 
-  const selectedItems = useMemo(
-    () =>
-      Array.from(selectedItemIds)
-        .map((id) => allMenuItems.find((item) => item.id === id))
-        .filter((item): item is MenuItem => item !== undefined),
-    [selectedItemIds, allMenuItems]
+  const selectedItemIds = useMemo(
+    () => new Set(cartItems.map((item) => item.id)),
+    [cartItems]
   );
 
   const handleToggle = (item: MenuItem) => {
-    const newSelected = new Set(selectedItemIds);
-    if (newSelected.has(item.id)) {
-      newSelected.delete(item.id);
-    } else {
-      newSelected.add(item.id);
-    }
-    setSelectedItemIds(newSelected);
+    setCartItems((currentItems) => {
+      if (currentItems.some((cartItem) => cartItem.id === item.id)) {
+        return currentItems.filter((cartItem) => cartItem.id !== item.id);
+      }
+
+      return [...currentItems, { ...item, quantity: 1 }];
+    });
+  };
+
+  const handleIncrease = (itemId: string) => {
+    setCartItems((currentItems) =>
+      currentItems.map((item) =>
+        item.id === itemId ? { ...item, quantity: item.quantity + 1 } : item
+      )
+    );
+  };
+
+  const handleDecrease = (itemId: string) => {
+    setCartItems((currentItems) =>
+      currentItems
+        .map((item) =>
+          item.id === itemId
+            ? { ...item, quantity: Math.max(item.quantity - 1, 0) }
+            : item
+        )
+        .filter((item) => item.quantity > 0)
+    );
   };
 
   const handleRemove = (itemId: string) => {
-    const newSelected = new Set(selectedItemIds);
-    newSelected.delete(itemId);
-    setSelectedItemIds(newSelected);
+    setCartItems((currentItems) => currentItems.filter((item) => item.id !== itemId));
   };
 
   const handleClearAll = () => {
-    setSelectedItemIds(new Set());
+    setCartItems([]);
   };
 
   const toggleCart = () => {
@@ -130,7 +142,9 @@ export default function Home() {
                 </div>
                 
                 <OrderSummary
-                  selectedItems={selectedItems}
+                  cartItems={cartItems}
+                  onIncrease={handleIncrease}
+                  onDecrease={handleDecrease}
                   onRemove={handleRemove}
                   onClearAll={handleClearAll}
                 />
@@ -143,7 +157,7 @@ export default function Home() {
       <div className="fixed bottom-4 right-4 z-40 sm:bottom-6 sm:right-6 lg:hidden">
         <button
           onClick={toggleCart}
-          aria-label={`Open order summary with ${selectedItems.length} selected item${selectedItems.length === 1 ? '' : 's'}`}
+          aria-label={`Open order summary with ${itemCount} item${itemCount === 1 ? '' : 's'}`}
           className="relative flex min-h-16 min-w-16 items-center justify-center rounded-full bg-amber-500 p-4 text-white shadow-2xl shadow-amber-500/40 transition-colors hover:bg-amber-600 active:scale-95"
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -151,9 +165,9 @@ export default function Home() {
             <circle cx="20" cy="21" r="1"></circle>
             <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
           </svg>
-          {selectedItems.length > 0 && (
+          {itemCount > 0 && (
             <span className="absolute -top-1 -right-1 bg-red-600 text-white text-[10px] font-bold w-6 h-6 rounded-full flex items-center justify-center border-2 border-slate-900">
-              {selectedItems.length}
+              {itemCount}
             </span>
           )}
         </button>

@@ -6,6 +6,13 @@ export interface MenuItem {
   category: 'lunch' | 'dinner' | 'frozen' | 'cooked' | 'italian';
 }
 
-export interface SelectedItem extends MenuItem {
-  selectedAt: Date;
+export interface CartItem extends MenuItem {
+  quantity: number;
+}
+
+export interface CustomerDetails {
+  name: string;
+  phone: string;
+  address: string;
+  notes: string;
 }
