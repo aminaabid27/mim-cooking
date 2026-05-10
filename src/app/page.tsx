@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from 'react';
 import Header from '@/components/Header';
+import MenuGallery from '@/components/MenuGallery';
 import MenuSection from '@/components/MenuSection';
 import OrderSummary from '@/components/OrderSummary';
 import { CartItem, MenuItem } from '@/types';
@@ -89,6 +90,12 @@ export default function Home() {
             className="sticky top-0 z-30 -mx-3 mb-6 border-y border-white/10 bg-slate-950/85 px-3 py-3 backdrop-blur-xl sm:mx-0 sm:rounded-2xl sm:border lg:top-4"
           >
             <div className="flex gap-2 overflow-x-auto overscroll-x-contain pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+              <a
+                href="#menu-gallery"
+                className="shrink-0 rounded-full border border-amber-300/40 bg-amber-400/15 px-4 py-2 text-sm font-bold text-amber-200 transition-colors hover:border-amber-300/70 hover:bg-amber-400/25"
+              >
+                Menu Gallery
+              </a>
               {menuSections.map((section) => (
                 <a
                   key={section.id}
@@ -100,6 +107,8 @@ export default function Home() {
               ))}
             </div>
           </nav>
+
+          <MenuGallery />
 
           <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-3 lg:gap-8">
             <div className="space-y-7 lg:col-span-2 lg:space-y-8">
