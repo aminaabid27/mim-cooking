@@ -15,7 +15,10 @@ import {
   italianFavourites,
 } from '@/data/menu';
 
+type ActiveTab = 'order' | 'download';
+
 export default function Home() {
+  const [activeTab, setActiveTab] = useState<ActiveTab>('order');
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
 
@@ -75,6 +78,11 @@ export default function Home() {
     setCartItems([]);
   };
 
+  const handleTabChange = (tab: ActiveTab) => {
+    setActiveTab(tab);
+    setIsCartOpen(false);
+  };
+
   const toggleCart = () => {
     setIsCartOpen(!isCartOpen);
   };
@@ -85,84 +93,117 @@ export default function Home() {
         <Header />
 
         <div className="mx-auto max-w-7xl px-3 pb-10 sm:px-4 sm:pb-16 lg:px-6 lg:pb-20">
-          <nav
-            aria-label="Menu categories"
-            className="sticky top-0 z-30 -mx-3 mb-6 border-y border-white/10 bg-slate-950/85 px-3 py-3 backdrop-blur-xl sm:mx-0 sm:rounded-2xl sm:border lg:top-4"
-          >
-            <div className="flex gap-2 overflow-x-auto overscroll-x-contain pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-              <a
-                href="#menu-gallery"
-                className="shrink-0 rounded-full border border-amber-300/40 bg-amber-400/15 px-4 py-2 text-sm font-bold text-amber-200 transition-colors hover:border-amber-300/70 hover:bg-amber-400/25"
+          <div className="sticky top-0 z-30 -mx-3 mb-6 border-y border-white/10 bg-slate-950/90 px-3 py-3 backdrop-blur-xl sm:mx-0 sm:rounded-2xl sm:border lg:top-4">
+            <div className="grid grid-cols-2 gap-2">
+              <button
+                type="button"
+                onClick={() => handleTabChange('order')}
+                aria-pressed={activeTab === 'order'}
+                className={`min-h-12 rounded-xl px-4 py-3 text-base font-black transition-colors sm:text-lg ${
+                  activeTab === 'order'
+                    ? 'bg-amber-500 text-slate-950 shadow-lg shadow-amber-500/25'
+                    : 'glass-effect text-slate-100 hover:bg-amber-400/15 hover:text-amber-200'
+                }`}
               >
-                Menu Gallery
-              </a>
-              {menuSections.map((section) => (
-                <a
-                  key={section.id}
-                  href={`#${section.id}`}
-                  className="shrink-0 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-bold text-slate-100 transition-colors hover:border-amber-300/60 hover:bg-amber-400/15 hover:text-amber-200"
-                >
-                  {section.title}
-                </a>
-              ))}
-            </div>
-          </nav>
-
-          <MenuGallery />
-
-          <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-3 lg:gap-8">
-            <div className="space-y-7 lg:col-span-2 lg:space-y-8">
-              {menuSections.map((section) => (
-                <MenuSection
-                  key={section.id}
-                  id={section.id}
-                  title={section.title}
-                  items={section.items}
-                  selectedIds={selectedItemIds}
-                  onToggle={handleToggle}
-                />
-              ))}
+                ORDER
+              </button>
+              <button
+                type="button"
+                onClick={() => handleTabChange('download')}
+                aria-pressed={activeTab === 'download'}
+                className={`min-h-12 rounded-xl px-4 py-3 text-base font-black transition-colors sm:text-lg ${
+                  activeTab === 'download'
+                    ? 'bg-amber-500 text-slate-950 shadow-lg shadow-amber-500/25'
+                    : 'glass-effect text-slate-100 hover:bg-amber-400/15 hover:text-amber-200'
+                }`}
+              >
+                DOWNLOAD
+              </button>
             </div>
 
-            <div className={`
-              fixed inset-0 z-50 lg:relative lg:inset-auto lg:z-auto lg:col-span-1 lg:block
-              ${isCartOpen ? 'block' : 'hidden'}
-            `}>
-              <div 
-                className="fixed inset-0 bg-black/60 backdrop-blur-sm lg:hidden"
-                onClick={() => setIsCartOpen(false)}
-              ></div>
-              
-              <div className={`
-                fixed bottom-0 left-0 right-0 max-h-[88dvh] overflow-y-auto rounded-t-3xl
-                bg-slate-950 p-4 shadow-2xl shadow-black/50 transition-transform duration-300 ease-in-out
-                lg:sticky lg:top-24 lg:max-h-[calc(100dvh-7rem)] lg:rounded-none lg:bg-transparent lg:p-0 lg:shadow-none lg:transform-none
-                ${isCartOpen ? 'translate-y-0' : 'translate-y-full'}
-              `}>
-                <div className="flex justify-between items-center mb-4 lg:hidden">
-                  <h2 className="text-xl font-bold text-white">Your Order</h2>
-                  <button 
-                    onClick={() => setIsCartOpen(false)}
-                    aria-label="Close order summary"
-                    className="min-h-11 min-w-11 rounded-full p-2 text-slate-300 hover:bg-white/10 hover:text-white"
+            {activeTab === 'order' && (
+              <nav aria-label="Order menu categories" className="mt-3">
+                <div className="flex gap-2 overflow-x-auto overscroll-x-contain pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                  {menuSections.map((section) => (
+                    <a
+                      key={section.id}
+                      href={`#${section.id}`}
+                      className="shrink-0 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-bold text-slate-100 transition-colors hover:border-amber-300/60 hover:bg-amber-400/15 hover:text-amber-200"
+                    >
+                      {section.title}
+                    </a>
+                  ))}
+                  <button
+                    type="button"
+                    onClick={() => handleTabChange('download')}
+                    className="shrink-0 rounded-full border border-amber-300/40 bg-amber-400/15 px-4 py-2 text-sm font-bold text-amber-200 transition-colors hover:border-amber-300/70 hover:bg-amber-400/25"
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    Download menus
                   </button>
                 </div>
+              </nav>
+            )}
+          </div>
+
+          {activeTab === 'order' ? (
+            <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-3 lg:gap-8">
+              <div className="space-y-7 lg:col-span-2 lg:space-y-8">
+                {menuSections.map((section) => (
+                  <MenuSection
+                    key={section.id}
+                    id={section.id}
+                    title={section.title}
+                    items={section.items}
+                    selectedIds={selectedItemIds}
+                    onToggle={handleToggle}
+                    onDownloadClick={() => handleTabChange('download')}
+                  />
+                ))}
+              </div>
+
+              <div className={`
+                fixed inset-0 z-50 lg:relative lg:inset-auto lg:z-auto lg:col-span-1 lg:block
+                ${isCartOpen ? 'block' : 'hidden'}
+              `}>
+                <div 
+                  className="fixed inset-0 bg-black/60 backdrop-blur-sm lg:hidden"
+                  onClick={() => setIsCartOpen(false)}
+                ></div>
                 
-                <OrderSummary
-                  cartItems={cartItems}
-                  onIncrease={handleIncrease}
-                  onDecrease={handleDecrease}
-                  onRemove={handleRemove}
-                  onClearAll={handleClearAll}
-                />
+                <div className={`
+                  fixed bottom-0 left-0 right-0 max-h-[88dvh] overflow-y-auto rounded-t-3xl
+                  bg-slate-950 p-4 shadow-2xl shadow-black/50 transition-transform duration-300 ease-in-out
+                  lg:sticky lg:top-32 lg:max-h-[calc(100dvh-9rem)] lg:rounded-none lg:bg-transparent lg:p-0 lg:shadow-none lg:transform-none
+                  ${isCartOpen ? 'translate-y-0' : 'translate-y-full'}
+                `}>
+                  <div className="flex justify-between items-center mb-4 lg:hidden">
+                    <h2 className="text-xl font-bold text-white">Your Order</h2>
+                    <button 
+                      onClick={() => setIsCartOpen(false)}
+                      aria-label="Close order summary"
+                      className="min-h-11 min-w-11 rounded-full p-2 text-slate-300 hover:bg-white/10 hover:text-white"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </button>
+                  </div>
+                  
+                  <OrderSummary
+                    cartItems={cartItems}
+                    onIncrease={handleIncrease}
+                    onDecrease={handleDecrease}
+                    onRemove={handleRemove}
+                    onClearAll={handleClearAll}
+                  />
+                </div>
               </div>
             </div>
-          </div>
+          ) : (
+            <MenuGallery onOrderClick={() => handleTabChange('order')} />
+          )}
         </div>
       </div>
 
+      {activeTab === 'order' && (
       <div className="fixed bottom-4 right-4 z-40 sm:bottom-6 sm:right-6 lg:hidden">
         <button
           onClick={toggleCart}
@@ -181,6 +222,7 @@ export default function Home() {
           )}
         </button>
       </div>
+      )}
     </main>
   );
 }

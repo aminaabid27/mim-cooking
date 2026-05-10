@@ -9,6 +9,7 @@ interface MenuSectionProps {
   items: MenuItem[];
   selectedIds: Set<string>;
   onToggle: (item: MenuItem) => void;
+  onDownloadClick: () => void;
 }
 
 const sectionEmojis: Record<string, string> = {
@@ -25,6 +26,7 @@ export default function MenuSection({
   items,
   selectedIds,
   onToggle,
+  onDownloadClick,
 }: MenuSectionProps) {
   const emoji = sectionEmojis[title] || '🍳';
   const selectedCount = items.filter((item) => selectedIds.has(item.id)).length;
@@ -32,7 +34,7 @@ export default function MenuSection({
   return (
     <section id={id} className="scroll-mt-24 animate-slide-in-up sm:scroll-mt-28">
       <div className="mb-4 sm:mb-5">
-        <div className="flex items-start gap-3 sm:items-center">
+        <div className="flex flex-wrap items-start gap-3 sm:items-center">
           <span className="shrink-0 text-3xl leading-none sm:text-4xl" aria-hidden="true">
             {emoji}
           </span>
@@ -47,6 +49,13 @@ export default function MenuSection({
               </span>
             </div>
           )}
+          <button
+            type="button"
+            onClick={onDownloadClick}
+            className="glass-effect min-h-10 shrink-0 rounded-xl px-3 py-2 text-xs font-bold text-amber-200 transition-colors hover:bg-amber-400/15 hover:text-amber-100 sm:text-sm"
+          >
+            Download menu
+          </button>
         </div>
       </div>
 

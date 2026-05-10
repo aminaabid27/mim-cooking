@@ -15,7 +15,7 @@ export const frozenItems: MenuItem[] = [
 
 export const cookedDishes: MenuItem[] = [
   { id: 'cooked-1', name: 'Biryani (1 kg)', price: 1720, category: 'cooked' },
-  { id: 'cooked-2', name: 'Daal Chawal', price: 450, category: 'cooked' },
+  { id: 'cooked-2', name: 'Daal Chawal', price: 470, category: 'cooked' },
   { id: 'cooked-3', name: 'Chicken Karahi (Half)', price: 1419, category: 'cooked' },
   { id: 'cooked-4', name: 'Chicken Karahi (Full)', price: 2019, category: 'cooked' },
   { id: 'cooked-5', name: 'Mutton Karahi (Full)', price: 3219, category: 'cooked' },
@@ -30,7 +30,7 @@ export const italianFavourites: MenuItem[] = [
   { id: 'italian-6', name: 'Lasagna (Large)', price: 900, category: 'italian' },
   { id: 'italian-7', name: 'White Sauce Pasta (Small)', price: 600, category: 'italian' },
   { id: 'italian-8', name: 'White Sauce Pasta (Large)', price: 880, category: 'italian' },
-  { id: 'italian-9', name: 'Red Sauce Pasta (Small)', price: 580, category: 'italian' },
+  { id: 'italian-9', name: 'Red Sauce Pasta (Small)', price: 570, category: 'italian' },
   { id: 'italian-10', name: 'Red Sauce Pasta (Large)', price: 880, category: 'italian' },
   { id: 'italian-11', name: 'Loaded Fries (Small)', price: 580, category: 'italian' },
   { id: 'italian-12', name: 'Loaded Fries (Large)', price: 850, category: 'italian' },
@@ -39,21 +39,21 @@ export const italianFavourites: MenuItem[] = [
 ];
 
 export const lunchMenu: MenuItem[] = [
-  { id: 'lunch-1', name: 'Chicken Pulao + Raita', price: 320, day: 'Monday', category: 'lunch' },
-  { id: 'lunch-2', name: 'Daal Chana + 2 Roti + Salad', price: 230, day: 'Tuesday', category: 'lunch' },
-  { id: 'lunch-3', name: 'Mix Sabzi + 2 Roti', price: 260, day: 'Wednesday', category: 'lunch' },
+  { id: 'lunch-1', name: 'Chicken Pulao + Raita', price: 350, day: 'Monday', category: 'lunch' },
+  { id: 'lunch-2', name: 'Daal Chana + 2 Roti + Salad', price: 250, day: 'Tuesday', category: 'lunch' },
+  { id: 'lunch-3', name: 'Mix Sabzi + 2 Roti', price: 280, day: 'Wednesday', category: 'lunch' },
   { id: 'lunch-4', name: 'Chicken Curry + 2 Roti', price: 320, day: 'Thursday', category: 'lunch' },
-  { id: 'lunch-5', name: 'Sabzi Pulao / Veg Rice + Raita', price: 250, day: 'Friday', category: 'lunch' },
-  { id: 'lunch-6', name: 'Daal Makhni + 2 Roti', price: 250, day: 'Saturday', category: 'lunch' },
-  { id: 'lunch-7', name: 'Chicken Karahi + 2 Roti', price: 380, day: 'Sunday', category: 'lunch' },
+  { id: 'lunch-5', name: 'Sabzi Pulao / Veg Rice + Raita', price: 290, day: 'Friday', category: 'lunch' },
+  { id: 'lunch-6', name: 'Daal Makhni + 2 Roti', price: 280, day: 'Saturday', category: 'lunch' },
+  { id: 'lunch-7', name: 'Chicken Karahi + 2 Roti', price: 390, day: 'Sunday', category: 'lunch' },
 ];
 
 export const dinnerMenu: MenuItem[] = [
   { id: 'dinner-1', name: 'Daal Chawal + Salad', price: 450, day: 'Monday', category: 'dinner' },
-  { id: 'dinner-2', name: 'Aloo Qeema + 2 Roti', price: 280, day: 'Tuesday', category: 'dinner' },
-  { id: 'dinner-3', name: 'Sabzi (Loki/Tori) + 2 Roti', price: 200, day: 'Wednesday', category: 'dinner' },
-  { id: 'dinner-4', name: 'Chicken Jalfrezi + 2 Roti', price: 300, day: 'Thursday', category: 'dinner' },
-  { id: 'dinner-5', name: 'Veg Pulao + Raita', price: 250, day: 'Friday', category: 'dinner' },
+  { id: 'dinner-2', name: 'Aloo Qeema + 2 Roti', price: 350, day: 'Tuesday', category: 'dinner' },
+  { id: 'dinner-3', name: 'Sabzi (Loki/Tori) + 2 Roti', price: 220, day: 'Wednesday', category: 'dinner' },
+  { id: 'dinner-4', name: 'Chicken Jalfrezi + 2 Roti', price: 320, day: 'Thursday', category: 'dinner' },
+  { id: 'dinner-5', name: 'Veg Pulao + Raita', price: 300, day: 'Friday', category: 'dinner' },
   { id: 'dinner-6', name: 'Seekh Kabab + Salan + 2 Roti', price: 350, day: 'Saturday', category: 'dinner' },
   { id: 'dinner-7', name: 'Egg Curry + 2 Roti', price: 240, day: 'Sunday', category: 'dinner' },
 ];

@@ -23,20 +23,25 @@ const menuImages = [
   },
 ];
 
-export default function MenuGallery() {
+interface MenuGalleryProps {
+  onOrderClick?: () => void;
+}
+
+export default function MenuGallery({ onOrderClick }: MenuGalleryProps) {
   return (
-    <section id="menu-gallery" className="mb-8 scroll-mt-24 animate-slide-in-up sm:mb-10">
+    <section id="menu-gallery" className="animate-slide-in-up">
       <div className="mb-5 flex flex-col gap-3 sm:mb-6 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <h2 className="text-2xl font-black leading-tight sm:text-4xl">Menu Gallery</h2>
           <div className="mt-2 h-1 w-16 rounded-full bg-gradient-to-r from-amber-400 to-orange-500 sm:w-24"></div>
         </div>
-        <a
-          href="#frozen-items"
+        <button
+          type="button"
+          onClick={onOrderClick}
           className="glass-effect inline-flex min-h-11 w-fit items-center rounded-xl px-4 py-2 text-sm font-bold text-amber-200 transition-colors hover:bg-amber-400/15 hover:text-amber-100"
         >
           Order from menu
-        </a>
+        </button>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
