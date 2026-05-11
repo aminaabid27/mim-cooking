@@ -121,9 +121,33 @@ export default function OrderSummary({
                     <div className="mt-1 text-xs leading-snug text-slate-400">
                       {item.day && `📅 ${item.day} • `}
                       {getCategoryLabel(item.category)}
+                      {item.menuName && !item.packageItems?.length && ` • ${item.menuName}`}
                     </div>
                   </div>
                 </div>
+                {item.packageItems?.length && (
+                  <div className="mt-3 rounded-xl border border-amber-300/20 bg-amber-400/10 p-3">
+                    <div className="mb-2 text-xs font-black uppercase tracking-wide text-amber-200">
+                      Included meals
+                    </div>
+                    <div className="space-y-1.5">
+                      {item.packageItems.map((packageItem) => (
+                        <div
+                          key={packageItem.id}
+                          className="flex gap-2 text-xs leading-snug text-slate-300"
+                        >
+                          <span className="min-w-16 font-bold text-slate-100">
+                            {packageItem.day}
+                          </span>
+                          <span className="flex-1">{packageItem.name}</span>
+                          <span className="font-bold text-amber-200">
+                            Rs. {packageItem.price}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
               <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
                 <div className="text-right">

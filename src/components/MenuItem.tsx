@@ -47,6 +47,11 @@ export default function MenuItemComponent({
               📅 {item.day}
             </div>
           )}
+          {item.menuName && (
+            <div className="mt-1 text-xs font-semibold text-slate-400">
+              {item.menuName}
+            </div>
+          )}
         </div>
 
         <div className={`col-start-2 justify-self-start rounded-full bg-slate-950/35 px-3 py-1.5 text-left sm:col-start-auto sm:justify-self-end sm:bg-transparent sm:px-0 sm:py-0 sm:text-right ${isSelected ? 'text-amber-300' : 'text-amber-200'}`}>

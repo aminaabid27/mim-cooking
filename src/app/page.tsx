@@ -5,14 +5,14 @@ import Header from '@/components/Header';
 import MenuGallery from '@/components/MenuGallery';
 import MenuSection from '@/components/MenuSection';
 import OrderSummary from '@/components/OrderSummary';
-import { CartItem, MenuItem } from '@/types';
+import WeeklyMenuCard from '@/components/WeeklyMenuCard';
+import { CartItem, MenuItem, WeeklyMenu } from '@/types';
 import { getCartItemCount } from '@/utils/formatting';
 import {
-  lunchMenu,
-  dinnerMenu,
   frozenItems,
   cookedDishes,
   italianFavourites,
+  weeklyMenus,
 } from '@/data/menu';
 
 type ActiveTab = 'order' | 'download';
@@ -27,8 +27,6 @@ export default function Home() {
       { id: 'frozen-items', title: 'Frozen Items', items: frozenItems },
       { id: 'italian-favourites', title: 'Italian Favourites', items: italianFavourites },
       { id: 'cooked-dishes', title: 'Cooked Dishes', items: cookedDishes },
-      { id: 'lunch-menu', title: 'Lunch Menu', items: lunchMenu },
-      { id: 'dinner-menu', title: 'Dinner Menu', items: dinnerMenu },
     ],
     []
   );
@@ -47,6 +45,31 @@ export default function Home() {
       }
 
       return [...currentItems, { ...item, quantity: 1 }];
+    });
+  };
+
+  const getWeeklyPackageId = (menuId: string) => `weekly-package-${menuId}`;
+
+  const handleBookWeeklyMenu = (menu: WeeklyMenu) => {
+    const packageId = getWeeklyPackageId(menu.id);
+
+    setCartItems((currentItems) => {
+      if (currentItems.some((cartItem) => cartItem.id === packageId)) {
+        return currentItems.filter((cartItem) => cartItem.id !== packageId);
+      }
+
+      return [
+        ...currentItems,
+        {
+          id: packageId,
+          name: menu.title,
+          price: menu.total,
+          category: 'weekly-package',
+          menuName: menu.title,
+          quantity: 1,
+          packageItems: menu.items,
+        },
+      ];
     });
   };
 
@@ -133,6 +156,12 @@ export default function Home() {
                       {section.title}
                     </a>
                   ))}
+                  <a
+                    href="#weekly-menus"
+                    className="shrink-0 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-bold text-slate-100 transition-colors hover:border-amber-300/60 hover:bg-amber-400/15 hover:text-amber-200"
+                  >
+                    Weekly Menus
+                  </a>
                   <button
                     type="button"
                     onClick={() => handleTabChange('download')}
@@ -148,6 +177,15 @@ export default function Home() {
           {activeTab === 'order' ? (
             <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-3 lg:gap-8">
               <div className="space-y-7 lg:col-span-2 lg:space-y-8">
+                <div className="glass-effect rounded-2xl px-4 py-5 sm:px-5">
+                  <h2 className="text-2xl font-black leading-tight sm:text-4xl">
+                    Regular M&M Cooking Menu
+                  </h2>
+                  <p className="mt-2 max-w-2xl text-sm leading-relaxed text-slate-400 sm:text-base">
+                    Select individual frozen items, cooked dishes, and Italian favourites.
+                  </p>
+                </div>
+
                 {menuSections.map((section) => (
                   <MenuSection
                     key={section.id}
@@ -159,6 +197,40 @@ export default function Home() {
                     onDownloadClick={() => handleTabChange('download')}
                   />
                 ))}
+
+                <section id="weekly-menus" className="scroll-mt-32">
+                  <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+                    <div>
+                      <h2 className="text-2xl font-black leading-tight sm:text-4xl">
+                        Weekly Lunch & Dinner Menus
+                      </h2>
+                      <div className="mt-2 h-1 w-16 rounded-full bg-gradient-to-r from-amber-400 to-orange-500 sm:w-24"></div>
+                      <p className="mt-3 max-w-2xl text-sm leading-relaxed text-slate-400 sm:text-base">
+                        Choose single weekly meals, or book a complete weekly menu package.
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => handleTabChange('download')}
+                      className="glass-effect min-h-11 w-fit rounded-xl px-4 py-2 text-sm font-black text-amber-200 transition-colors hover:bg-amber-400/15 hover:text-amber-100"
+                    >
+                      Download menu pictures
+                    </button>
+                  </div>
+
+                  <div className="grid gap-5 xl:grid-cols-2">
+                    {weeklyMenus.map((menu) => (
+                      <WeeklyMenuCard
+                        key={menu.id}
+                        menu={menu}
+                        isBooked={selectedItemIds.has(getWeeklyPackageId(menu.id))}
+                        selectedIds={selectedItemIds}
+                        onToggleItem={handleToggle}
+                        onBookMenu={handleBookWeeklyMenu}
+                      />
+                    ))}
+                  </div>
+                </section>
               </div>
 
               <div className={`

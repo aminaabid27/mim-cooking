@@ -1,4 +1,4 @@
-import { MenuItem } from '@/types';
+import { MenuItem, WeeklyMenu } from '@/types';
 
 export const frozenItems: MenuItem[] = [
   { id: 'frozen-1', name: 'Chicken Spring Veg Rolls (12 pcs)', price: 600, category: 'frozen' },
@@ -38,22 +38,95 @@ export const italianFavourites: MenuItem[] = [
   { id: 'italian-14', name: 'Chicken Bread (Large)', price: 1550, category: 'italian' },
 ];
 
-export const lunchMenu: MenuItem[] = [
-  { id: 'lunch-1', name: 'Chicken Pulao + Raita', price: 350, day: 'Monday', category: 'lunch' },
-  { id: 'lunch-2', name: 'Daal Chana + 2 Roti + Salad', price: 250, day: 'Tuesday', category: 'lunch' },
-  { id: 'lunch-3', name: 'Mix Sabzi + 2 Roti', price: 280, day: 'Wednesday', category: 'lunch' },
-  { id: 'lunch-4', name: 'Chicken Curry + 2 Roti', price: 320, day: 'Thursday', category: 'lunch' },
-  { id: 'lunch-5', name: 'Sabzi Pulao / Veg Rice + Raita', price: 290, day: 'Friday', category: 'lunch' },
-  { id: 'lunch-6', name: 'Daal Makhni + 2 Roti', price: 280, day: 'Saturday', category: 'lunch' },
-  { id: 'lunch-7', name: 'Chicken Karahi + 2 Roti', price: 390, day: 'Sunday', category: 'lunch' },
-];
+const weeklyItem = (
+  menuId: string,
+  menuName: string,
+  day: string,
+  name: string,
+  price: number,
+  category: 'weekly-lunch' | 'weekly-dinner'
+): MenuItem => ({
+  id: `${menuId}-${day.toLowerCase()}`,
+  name,
+  price,
+  day,
+  category,
+  menuName,
+});
 
-export const dinnerMenu: MenuItem[] = [
-  { id: 'dinner-1', name: 'Daal Chawal + Salad', price: 450, day: 'Monday', category: 'dinner' },
-  { id: 'dinner-2', name: 'Aloo Qeema + 2 Roti', price: 350, day: 'Tuesday', category: 'dinner' },
-  { id: 'dinner-3', name: 'Sabzi (Loki/Tori) + 2 Roti', price: 220, day: 'Wednesday', category: 'dinner' },
-  { id: 'dinner-4', name: 'Chicken Jalfrezi + 2 Roti', price: 320, day: 'Thursday', category: 'dinner' },
-  { id: 'dinner-5', name: 'Veg Pulao + Raita', price: 300, day: 'Friday', category: 'dinner' },
-  { id: 'dinner-6', name: 'Seekh Kabab + Salan + 2 Roti', price: 350, day: 'Saturday', category: 'dinner' },
-  { id: 'dinner-7', name: 'Egg Curry + 2 Roti', price: 240, day: 'Sunday', category: 'dinner' },
+export const weeklyMenus: WeeklyMenu[] = [
+  {
+    id: 'weekly-lunch-menu-1',
+    title: 'Weekly Lunch Menu 1',
+    description: 'Five day lunch plan from WEEKLY LUNCH MENU 1',
+    sourceImage: 'WEEKLY LUNCH MENU 1.png',
+    total: 1690,
+    items: [
+      weeklyItem('weekly-lunch-menu-1', 'Weekly Lunch Menu 1', 'Monday', 'Chicken Pulao + Raita', 320, 'weekly-lunch'),
+      weeklyItem('weekly-lunch-menu-1', 'Weekly Lunch Menu 1', 'Tuesday', 'Daal Chana + Salad', 220, 'weekly-lunch'),
+      weeklyItem('weekly-lunch-menu-1', 'Weekly Lunch Menu 1', 'Wednesday', 'White Sauce Pasta', 600, 'weekly-lunch'),
+      weeklyItem('weekly-lunch-menu-1', 'Weekly Lunch Menu 1', 'Thursday', 'Chicken Curry', 300, 'weekly-lunch'),
+      weeklyItem('weekly-lunch-menu-1', 'Weekly Lunch Menu 1', 'Friday', 'Sabzi Pulao / Veg Rice + Raita', 250, 'weekly-lunch'),
+    ],
+  },
+  {
+    id: 'weekly-lunch-menu-2',
+    title: 'Weekly Lunch Menu 2',
+    description: 'Five day lunch plan from WEEKLY LUNCH MENU 2',
+    sourceImage: 'WEEKLY LUNCH MENU 2.png',
+    total: 1770,
+    items: [
+      weeklyItem('weekly-lunch-menu-2', 'Weekly Lunch Menu 2', 'Monday', 'Chicken Qeema + 1 Roti', 360, 'weekly-lunch'),
+      weeklyItem('weekly-lunch-menu-2', 'Weekly Lunch Menu 2', 'Tuesday', 'Black Daal + Salad', 250, 'weekly-lunch'),
+      weeklyItem('weekly-lunch-menu-2', 'Weekly Lunch Menu 2', 'Wednesday', 'Biryani', 350, 'weekly-lunch'),
+      weeklyItem('weekly-lunch-menu-2', 'Weekly Lunch Menu 2', 'Thursday', 'Chicken Jalfrezi', 360, 'weekly-lunch'),
+      weeklyItem('weekly-lunch-menu-2', 'Weekly Lunch Menu 2', 'Friday', 'Daal Chawal', 450, 'weekly-lunch'),
+    ],
+  },
+  {
+    id: 'weekly-lunch-menu-3',
+    title: 'Weekly Lunch Menu 3',
+    description: 'Five day lunch plan from WEEKLY LUNCH MENU 3',
+    sourceImage: 'WEEKLY LUNCH MENU 3.png',
+    total: 2050,
+    items: [
+      weeklyItem('weekly-lunch-menu-3', 'Weekly Lunch Menu 3', 'Monday', 'Chinese Rice + Chicken Manchurian', 600, 'weekly-lunch'),
+      weeklyItem('weekly-lunch-menu-3', 'Weekly Lunch Menu 3', 'Tuesday', 'Chicken Qeema', 350, 'weekly-lunch'),
+      weeklyItem('weekly-lunch-menu-3', 'Weekly Lunch Menu 3', 'Wednesday', 'Daal Mash', 300, 'weekly-lunch'),
+      weeklyItem('weekly-lunch-menu-3', 'Weekly Lunch Menu 3', 'Thursday', 'Chicken Kofta + Anda', 350, 'weekly-lunch'),
+      weeklyItem('weekly-lunch-menu-3', 'Weekly Lunch Menu 3', 'Friday', 'Daal Chawal', 450, 'weekly-lunch'),
+    ],
+  },
+  {
+    id: 'weekly-lunch-dinner-menu-1-lunch',
+    title: 'Weekly Lunch + Dinner Menu 1 - Lunch',
+    description: 'Seven day lunch plan from WEEKLY LUNCH + DINNER MENU 1',
+    sourceImage: 'WEEKLY LUNCH + DINNER MENU 1.png',
+    total: 2160,
+    items: [
+      weeklyItem('weekly-lunch-dinner-menu-1-lunch', 'Weekly Lunch + Dinner Menu 1 - Lunch', 'Monday', 'Chicken Pulao + Raita', 350, 'weekly-lunch'),
+      weeklyItem('weekly-lunch-dinner-menu-1-lunch', 'Weekly Lunch + Dinner Menu 1 - Lunch', 'Tuesday', 'Daal Chana + 2 Roti + Salad', 250, 'weekly-lunch'),
+      weeklyItem('weekly-lunch-dinner-menu-1-lunch', 'Weekly Lunch + Dinner Menu 1 - Lunch', 'Wednesday', 'Mix Sabzi + 2 Roti', 280, 'weekly-lunch'),
+      weeklyItem('weekly-lunch-dinner-menu-1-lunch', 'Weekly Lunch + Dinner Menu 1 - Lunch', 'Thursday', 'Chicken Curry + 2 Roti', 320, 'weekly-lunch'),
+      weeklyItem('weekly-lunch-dinner-menu-1-lunch', 'Weekly Lunch + Dinner Menu 1 - Lunch', 'Friday', 'Sabzi Pulao / Veg Rice + Raita', 290, 'weekly-lunch'),
+      weeklyItem('weekly-lunch-dinner-menu-1-lunch', 'Weekly Lunch + Dinner Menu 1 - Lunch', 'Saturday', 'Daal Makhni + 2 Roti', 280, 'weekly-lunch'),
+      weeklyItem('weekly-lunch-dinner-menu-1-lunch', 'Weekly Lunch + Dinner Menu 1 - Lunch', 'Sunday', 'Chicken Karahi + 2 Roti', 390, 'weekly-lunch'),
+    ],
+  },
+  {
+    id: 'weekly-lunch-dinner-menu-1-dinner',
+    title: 'Weekly Lunch + Dinner Menu 1 - Dinner',
+    description: 'Seven day dinner plan from WEEKLY LUNCH + DINNER MENU 1',
+    sourceImage: 'WEEKLY LUNCH + DINNER MENU 1.png',
+    total: 2230,
+    items: [
+      weeklyItem('weekly-lunch-dinner-menu-1-dinner', 'Weekly Lunch + Dinner Menu 1 - Dinner', 'Monday', 'Daal Chawal + Salad', 450, 'weekly-dinner'),
+      weeklyItem('weekly-lunch-dinner-menu-1-dinner', 'Weekly Lunch + Dinner Menu 1 - Dinner', 'Tuesday', 'Aloo Qeema + 2 Roti', 350, 'weekly-dinner'),
+      weeklyItem('weekly-lunch-dinner-menu-1-dinner', 'Weekly Lunch + Dinner Menu 1 - Dinner', 'Wednesday', 'Sabzi (Loki/Tori) + 2 Roti', 220, 'weekly-dinner'),
+      weeklyItem('weekly-lunch-dinner-menu-1-dinner', 'Weekly Lunch + Dinner Menu 1 - Dinner', 'Thursday', 'Chicken Jalfrezi + 2 Roti', 320, 'weekly-dinner'),
+      weeklyItem('weekly-lunch-dinner-menu-1-dinner', 'Weekly Lunch + Dinner Menu 1 - Dinner', 'Friday', 'Veg Pulao + Raita', 300, 'weekly-dinner'),
+      weeklyItem('weekly-lunch-dinner-menu-1-dinner', 'Weekly Lunch + Dinner Menu 1 - Dinner', 'Saturday', 'Seekh Kabab + Salan + 2 Roti', 350, 'weekly-dinner'),
+      weeklyItem('weekly-lunch-dinner-menu-1-dinner', 'Weekly Lunch + Dinner Menu 1 - Dinner', 'Sunday', 'Egg Curry + 2 Roti', 240, 'weekly-dinner'),
+    ],
+  },
 ];

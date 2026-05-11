@@ -3,11 +3,12 @@ import { CartItem, CustomerDetails } from '@/types';
 
 export const getCategoryLabel = (category: string): string => {
   const labels: Record<string, string> = {
-    lunch: 'Lunch',
-    dinner: 'Dinner',
     frozen: 'Frozen Item',
     cooked: 'Cooked Dish',
     italian: 'Italian Favourite',
+    'weekly-lunch': 'Weekly Lunch',
+    'weekly-dinner': 'Weekly Dinner',
+    'weekly-package': 'Weekly Menu Package',
   };
   return labels[category] || category;
 };
@@ -36,7 +37,25 @@ export const formatOrderText = (
     const categoryLabel = getCategoryLabel(item.category);
     const dayPart = item.day ? `${item.day} ` : '';
     const subtotal = item.price * item.quantity;
+
+    if (item.packageItems?.length) {
+      text += `${index + 1}. ${categoryLabel}: ${item.name}\n`;
+      text += `   Weekly menu name: ${item.menuName || item.name}\n`;
+      text += '   Included meals:\n';
+      item.packageItems.forEach((packageItem) => {
+        const packageDay = packageItem.day ? `${packageItem.day}: ` : '';
+        text += `   - ${packageDay}${packageItem.name} (${formatPrice(packageItem.price)})\n`;
+      });
+      text += `   Package total: ${formatPrice(item.price)}\n`;
+      text += `   Quantity: ${item.quantity}\n`;
+      text += `   Subtotal: ${formatPrice(subtotal)}\n`;
+      return;
+    }
+
     text += `${index + 1}. ${dayPart}${categoryLabel}: ${item.name}\n`;
+    if (item.menuName) {
+      text += `   Menu: ${item.menuName}\n`;
+    }
     text += `   Quantity: ${item.quantity}\n`;
     text += `   Price: ${formatPrice(item.price)}\n`;
     text += `   Subtotal: ${formatPrice(subtotal)}\n`;
