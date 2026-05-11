@@ -13,10 +13,19 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "M&M Cooking - Home of Authentic Flavours",
+  metadataBase: new URL("https://mandm-cooking.vercel.app"),
+  title: {
+    default: "M&M Cooking",
+    template: "%s | M&M Cooking",
+  },
   description:
-    "Order authentic homemade Pakistani and Italian food from M&M Cooking. Located in Chaklala Scheme 3, Islamabad & Rawalpindi. Lunch, dinner, frozen items, and more.",
+    "Homemade food, weekly menus, catering, and events by M&M Cooking.",
   keywords: [
+    "M&M Cooking",
+    "homemade food",
+    "weekly menus",
+    "catering",
+    "events",
     "food",
     "restaurant",
     "Pakistani food",
@@ -25,10 +34,54 @@ export const metadata: Metadata = {
     "menu",
     "order",
   ],
+  alternates: {
+    canonical: "/",
+  },
+  icons: {
+    icon: [
+      {
+        url: "/LOGO.png",
+        type: "image/png",
+        sizes: "1563x1563",
+      },
+    ],
+    apple: [
+      {
+        url: "/LOGO.png",
+        type: "image/png",
+        sizes: "1563x1563",
+      },
+    ],
+  },
   openGraph: {
-    title: "M&M Cooking - Home of Authentic Flavours",
-    description: "Order authentic homemade Pakistani and Italian food online",
+    title: "M&M Cooking",
+    description:
+      "Homemade food, weekly menus, catering, and events by M&M Cooking.",
+    url: "/",
+    siteName: "M&M Cooking",
+    images: [
+      {
+        url: "/LOGO.png",
+        width: 1563,
+        height: 1563,
+        alt: "M&M Cooking logo",
+        type: "image/png",
+      },
+    ],
+    locale: "en_US",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "M&M Cooking",
+    description:
+      "Homemade food, weekly menus, catering, and events by M&M Cooking.",
+    images: [
+      {
+        url: "/LOGO.png",
+        alt: "M&M Cooking logo",
+      },
+    ],
   },
 };
 

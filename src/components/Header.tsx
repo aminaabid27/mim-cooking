@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { BUSINESS_PHONE_DISPLAY, BUSINESS_PHONE_TEL } from '@/config/business';
 
 export default function Header() {
@@ -7,6 +8,20 @@ export default function Header() {
     <header className="relative overflow-hidden animate-slide-in-down">
       <div className="relative mx-auto max-w-6xl px-3 py-8 sm:px-4 sm:py-12 md:py-16">
         <div className="text-center">
+          <div className="mb-5 flex justify-center sm:mb-6">
+            <div className="glass-effect flex h-24 w-24 items-center justify-center overflow-hidden rounded-full p-2 shadow-2xl shadow-amber-950/25 sm:h-32 sm:w-32 md:h-36 md:w-36">
+              <Image
+                src="/LOGO.png"
+                alt="M&M Cooking logo"
+                width={1563}
+                height={1563}
+                priority
+                sizes="(min-width: 768px) 144px, (min-width: 640px) 128px, 96px"
+                className="h-full w-full object-contain"
+              />
+            </div>
+          </div>
+
           <div className="mb-6 inline-block">
             <div className="glass-effect rounded-full px-4 py-2 text-xs font-bold uppercase tracking-[0.16em] text-amber-300 sm:text-sm sm:tracking-[0.2em]">
               Authentic Homemade Cuisine
