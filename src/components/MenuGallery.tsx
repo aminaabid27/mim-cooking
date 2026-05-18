@@ -14,6 +14,10 @@ const menuImages = [
     fileName: 'WEEKLY LUNCH MENU 3.png',
   },
   {
+    title: 'Weekly Lunch Menu 4',
+    fileName: 'WEEKLY LUNCH MENU 4.png',
+  },
+  {
     title: 'Weekly Lunch + Dinner Menu',
     fileName: 'WEEKLY LUNCH + DINNER MENU 1.png',
   },

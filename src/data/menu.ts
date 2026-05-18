@@ -98,6 +98,20 @@ export const weeklyMenus: WeeklyMenu[] = [
     ],
   },
   {
+    id: 'weekly-lunch-menu-4',
+    title: 'Weekly Lunch Menu 4',
+    description: 'Five day lunch plan from WEEKLY LUNCH MENU 4',
+    sourceImage: 'WEEKLY LUNCH MENU 4.png',
+    total: 1560,
+    items: [
+      weeklyItem('weekly-lunch-menu-4', 'Weekly Lunch Menu 4', 'Monday', 'Khari Pakora', 280, 'weekly-lunch'),
+      weeklyItem('weekly-lunch-menu-4', 'Weekly Lunch Menu 4', 'Tuesday', 'Chicken Karahi', 360, 'weekly-lunch'),
+      weeklyItem('weekly-lunch-menu-4', 'Weekly Lunch Menu 4', 'Wednesday', 'Biryani', 350, 'weekly-lunch'),
+      weeklyItem('weekly-lunch-menu-4', 'Weekly Lunch Menu 4', 'Thursday', 'Channay', 280, 'weekly-lunch'),
+      weeklyItem('weekly-lunch-menu-4', 'Weekly Lunch Menu 4', 'Friday', 'Bhindi', 290, 'weekly-lunch'),
+    ],
+  },
+  {
     id: 'weekly-lunch-dinner-menu-1-lunch',
     title: 'Weekly Lunch + Dinner Menu 1 - Lunch',
     description: 'Seven day lunch plan from WEEKLY LUNCH + DINNER MENU 1',
